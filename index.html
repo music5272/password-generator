@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <title>Passwort-Gerator</title>
+        <meta charset="utf-8">
+        <script>
+            const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+            const numbers = '1234567890';
+            const symbols = '.,-_!?$%&';
+
+            //let zahlen = document.getElementById("zahlen").checked;
+            function generate() {
+                let includeNumbers = document.getElementById("zahlen").checked;
+                let includeUpperCase = document.getElementById("grossbuchstaben").checked;
+                let includeLowerCase = document.getElementById("kleinbuchstaben").checked;
+                let includeSymbols = document.getElementById("sonderzeichen").checked;
+                let anzahl = document.getElementById("anzahl").value;
+
+                //alert(includeNumbers + " " + includeUpperCase + " " + includeLowerCase + " " + includeSymbols);
+
+                var password, index, counter, newChar;
+                password = "";
+
+                //let i = 0; i < cars.length; i++
+                for (let i = 0; i < anzahl; i++) {
+                    index = Math.floor(Math.random() * 5);
+                    if (index == 0 && includeUpperCase == true || index == 1 && includeLowerCase == true) {
+                        counter = Math.floor(Math.random() * 26);
+                        if (index == 0) {
+                            newChar = upperCase.charAt(counter);
+                            password = password.concat(newChar);
+                        } else {
+                            newChar = lowerCase.charAt(counter);
+                            password = password.concat(newChar);
+                        }
+                    } else if (index == 2 && includeNumbers == true) {
+                        counter = Math.floor(Math.random() * 10);
+                        newChar = numbers.charAt(counter);
+                        password = password.concat(newChar);
+                    } else if (index == 3 && includeSymbols == true) {
+                        counter = Math.floor(Math.random() * 9);
+                        newChar = symbols.charAt(counter);
+                        password = password.concat(newChar);
+                    } else {
+                        i--;
+                    }
+                }
+
+                //alert("passwort: " + password + "\nZeichen: " + password.length);
+                document.getElementById("passwortOutput").innerHTML = password;
+            }
+        </script>
+    </head>
+    <body>
+
+        <main>
+
+            <p id="passwortOutput"><span class="platzhalterPasswortOutput">Passwort</span></p>
+
+            <form>
+                
+                <input type="checkbox" value="zahlen" name="zahlen" id="zahlen" checked>
+                <label for="zahlen">Zahlen</label><br>
+
+                <input type="checkbox" value="grossbuchstaben" name="grossbuchstaben" id="grossbuchstaben" checked>
+                <label for="grossbuchstaben">Großbuchstaben</label><br>
+
+                <input type="checkbox" value="kleinbuchstaben" name="kleinbuchstaben" id="kleinbuchstaben" checked>
+                <label for="kleinbuchstaben">Kleinbuchstaben</label><br>
+
+                <input type="checkbox" value="sonderzeichen" name="sonderzeichen" id="sonderzeichen" checked>
+                <label for="sonderzeichen">Sonderzeichen</label><br>
+
+                <input type="number" value="" name="anzahl" id="anzahl"><br>
+
+                <input type="button" onClick="generate()" id="generierenBtn" value="Passwort generieren">
+
+            </form>
+        </main>
+    </body>
+</html>
